@@ -4,7 +4,6 @@
 
 // Define a global client that can request services
 ros::ServiceClient client;
-bool found_white = false;
 // This function calls the command_robot service to drive the robot in the specified direction
 void drive_robot(float lin_x, float ang_z)
 {
@@ -30,29 +29,29 @@ void process_image_callback(const sensor_msgs::Image img)
     // Depending on the white ball position, call the drive_bot function and pass velocities to it
     // Request a stop when there's no white ball seen by the camera
 	int white_pos;
-	ROS_INFO("In process_image_callback function");
+	bool white_found = false;
+        int a_third_img = img.step / 3;
 	// Loop through each pixel in the image and check if its equal to the first one
     for (int i = 0; i < img.height * img.step; i++) {
-		ROS_INFO("Data image - %d", (int)img.data[i]);
         if (img.data[i] == white_pixel) {
-            ROS_INFO("Found white");
 			white_pos = i % img.step;
-            if(white_pos < (img.step* (1/3))){
-				drive_robot(0,0.4);
-				break;
-			}
-			else if(white_pos >= img.step* (1/3) && white_pos <= (img.step *(2/3))){
-				drive_robot(0.4,0);
-				break;
-			}
-			else{
-				drive_robot(0,-0.4);
-				break;
-			}
-        }
-		else{
-			drive_robot(0,0);
+			white_found = true;
+			break;
 		}
+	}
+	if (white_found){
+		if(white_pos < a_third_img){
+			drive_robot(0,0.1);
+		}
+		else if(white_pos >= a_third_img && white_pos <= (2 *a_third_img)){
+			drive_robot(0.4,0);
+		}
+		else{
+			drive_robot(0,-0.1);
+		}
+	}
+	else{
+		drive_robot(0,0);
 	}			
 }
 
