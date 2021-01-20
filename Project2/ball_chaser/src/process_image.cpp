@@ -33,7 +33,7 @@ void process_image_callback(const sensor_msgs::Image img)
         int a_third_img = img.step / 3;
 	// Loop through each pixel in the image and check if its equal to the first one
     for (int i = 0; i < img.height * img.step; i++) {
-        if (img.data[i] == white_pixel) {
+        if (img.data[i] == white_pixel && img.data[i+1] == white_pixel && img.data[i+2] == white_pixel) {
 			white_pos = i % img.step;
 			white_found = true;
 			break;
@@ -41,13 +41,13 @@ void process_image_callback(const sensor_msgs::Image img)
 	}
 	if (white_found){
 		if(white_pos < a_third_img){
-			drive_robot(0,0.1);
+			drive_robot(0,0.15);
 		}
 		else if(white_pos >= a_third_img && white_pos <= (2 *a_third_img)){
 			drive_robot(0.4,0);
 		}
 		else{
-			drive_robot(0,-0.1);
+			drive_robot(0,-0.15);
 		}
 	}
 	else{
