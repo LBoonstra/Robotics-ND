@@ -1,0 +1,12 @@
+[submodule "Home Service Robot/src/turtlebot"]
+	path = Home Service Robot/src/turtlebot
+	url = https://github.com/turtlebot/turtlebot
+[submodule "Home Service Robot/src/turtlebot_interactions"]
+	path = Home Service Robot/src/turtlebot_interactions
+	url = https://github.com/turtlebot/turtlebot_interactions
+[submodule "Home Service Robot/src/turtlebot_simulator"]
+	path = Home Service Robot/src/turtlebot_simulator
+	url = https://github.com/turtlebot/turtlebot_simulator
+[submodule "Home Service Robot/src/slam_gmapping"]
+	path = Home Service Robot/src/slam_gmapping
+	url = https://github.com/ros-perception/slam_gmapping
